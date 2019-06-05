@@ -69,17 +69,22 @@ class Codalot(object):
             if knight.getXp() >= 3:
                 bonusKnights = bonusKnights + 1
 
-        if bonusKnights == 3:
+        if bonusKnights == 4:
             for knight in self.knights:
                 if knight.getXp() >= 3:
                     knight.setXp(knight.getXp() + 5)
 
-        if bonusKnights == 5:
+        if bonusKnights == 6:
             for knight in self.knights:
                 if knight.getXp() >= 3:
                     knight.setXp(knight.getXp() + 10)
 
-        if bonusKnights == 6:
+        if bonusKnights == 10:
+            for knight in self.knights:
+                if knight.getXp() >= 3:
+                    knight.setXp(knight.getXp() + 15)
+
+        if bonusKnights == 12:
             for knight in self.knights:
                 if knight.getXp() >= 3:
                     knight.setXp(knight.getXp() + 20)
