@@ -61,7 +61,7 @@ class Codalot(object):
     def process(self):
         for knight in self.knights:
             knight.incrementStamina(1 if knight.isInTavern() else -1)
-            knight.incrementXp(1 if knight.isInTrainingYard() else 0)
+            knight.incrementXp(1 if knight.isInTrainingYard() and knight.getStamina() > 0 else 0)
 
     def grantBonusXp(self):
         bonusKnights = 0
