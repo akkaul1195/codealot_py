@@ -88,7 +88,7 @@ if __name__ == "__main__":
     codalot = Codalot()
 
     knights = list()
-    for i in range(6):
+    for i in range(12):
         knights.append(Knight())
 
     random = Random(1)
