@@ -3,6 +3,7 @@ from random import Random
 class Knight(object):
     __isInTavern = False
     __isInTrainingYard = False
+    __staminaStillValid = True
 
     def __init__(self):
         self.__xp = 0
@@ -15,7 +16,10 @@ class Knight(object):
         self.__xp = xp
 
     def incrementXp(self, xp):
-        self.__xp += xp
+        if self.__staminaStillValid:
+            self.__xp += xp
+        else: 
+            self.__xp = 0
 
     def getStamina(self):
         return self.__stamina
@@ -25,6 +29,8 @@ class Knight(object):
 
     def incrementStamina(self, stamina):
         self.__stamina += stamina
+        if self.__stamina < 0:
+            self.__staminaStillValid = False
 
     def isInTavern(self):
         return self.__isInTavern
@@ -37,7 +43,6 @@ class Knight(object):
 
     def setInTrainingYard(self, isInTrainingYard):
         self.__isInTrainingYard = isInTrainingYard
-
 
 class Codalot(object):
     knights = []
