@@ -1,4 +1,5 @@
 from random import Random
+import sys
 
 class Knight(object):
     __isInTavern = False
@@ -6,6 +7,7 @@ class Knight(object):
     __staminaStillValid = True
 
     def __init__(self):
+        self.__totalxp = 0
         self.__xp = 0
         self.__stamina = 0
 
@@ -43,6 +45,14 @@ class Knight(object):
 
     def setInTrainingYard(self, isInTrainingYard):
         self.__isInTrainingYard = isInTrainingYard
+
+    def addXpToTotal(self):
+        self.__totalxp += self.__xp
+        self.__xp = 0
+        self.__staminaStillValid = True
+
+    def getTotalXp(self):
+        return self.__totalxp
 
 class Codalot(object):
     knights = []
@@ -94,7 +104,20 @@ class Codalot(object):
                 if knight.getXp() >= 3:
                     knight.setXp(knight.getXp() + 20)
 
+    def addDailyXpToTotal(self):
+        for knight in self.knights:
+            knight.addXpToTotal()
+
+
 if __name__ == "__main__":
+    try:
+        days = int(sys.argv[1])
+    except IndexError:
+        days = 1
+    except ValueError:
+        print "Invalid Input: please leave blank or enter a number using numerals"
+        sys.exit(1)
+
     codalot = Codalot()
 
     knights = list()
@@ -102,21 +125,23 @@ if __name__ == "__main__":
         knights.append(Knight())
 
     random = Random(1)
-    for i in range(24):
-        codalot.clearKnights()
-        for knight in knights:
-            randomVal = random.randint(0, 1)
-            if randomVal == 0:
-                codalot.addKnightToTrainingYard(knight)
-            elif randomVal == 1:
-                codalot.addKnightToTavern(knight)
-        codalot.process()
-    codalot.grantBonusXp()
+    for j in range(days):
+        for i in range(24):
+            codalot.clearKnights()
+            for knight in knights:
+                randomVal = random.randint(0, 1)
+                if randomVal == 0:
+                    codalot.addKnightToTrainingYard(knight)
+                elif randomVal == 1:
+                    codalot.addKnightToTavern(knight)
+            codalot.process()
+        codalot.grantBonusXp()
+        codalot.addDailyXpToTotal()
 
     totalXp = 0
     for knight in knights:
-        totalXp = totalXp + knight.getXp()
+        totalXp = totalXp + knight.getTotalXp()
 
-    print "Total XP earned by all " + str(len(knights)) + " knights: " + str(totalXp)
+    print "Total XP earned by all " + str(len(knights)) + " knights in " + str(days) + " day(s): " + str(totalXp) 
 
 
